@@ -2,11 +2,17 @@
 <html>
   <head>
     <title>LMN FE assingment</title>
+
+    <link rel="stylesheet" href="main.css">
   </head>
-  <body>
-    <h1>LMN FE assignment</h1>
+
+  <body onload="loadHotels()">
+    <div class="header-wrap">
+      <img src="lmn-logo-white.svg" alt="lastminute logo">
+    </div>
+
     <button type="button" onclick="getHotels()">Get Hotels</button>
-    <button type="button" onclick="getHotelInfo(1)">Get Hotel Info</button>
+    <button type="button" onclick="loadHotelInfo(1)">Get Hotel Info</button>
 
     <!-- Application bootstrap  -->
     <script src="js/client.js"></script>

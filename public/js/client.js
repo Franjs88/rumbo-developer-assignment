@@ -1,32 +1,70 @@
 'use strict';
 
-function getHotels() {
-// Definimos la URL que vamos a solicitar via Ajax
-    var ajax_url = "http://localhost:8765/api/hotels/";
+const APIendpoint = "http://localhost:8765/api";
 
-// Creamos un nuevo objeto encargado de la comunicación
-    var ajax_request = new XMLHttpRequest();
 
-// Definimos como queremos realizar la comunicación
-    ajax_request.open( "GET", ajax_url, true );
+// Promises by Google: https://developers.google.com/web/fundamentals/getting-started/primers/promises#promisifying_xmlhttprequest
 
-//Enviamos la solicitud
-    ajax_request.send();
+function get(url, param) {
+    // Return a new promise.
+    return new Promise(function(resolve, reject) {
+        // Do the usual XHR stuff
+        var req = new XMLHttpRequest();
+
+        var req_url = url;
+        if (param != undefined || null) {
+            req_url += param;
+        }
+
+        req.open('GET', req_url);
+
+        req.onload = function() {
+            // This is called even on 404 etc
+            // so check the status
+            if (req.status == 200) {
+                // Resolve the promise with the response text
+                resolve(req.response);
+            }
+            else {
+                // Otherwise reject with the status text
+                // which will hopefully be a meaningful error
+                reject(Error(req.statusText));
+            }
+        };
+
+        // Handle network errors
+        req.onerror = function() {
+            reject(Error("Network Error"));
+        };
+
+        // Make the request
+        req.send();
+    });
 }
 
-function getHotelInfo(id) {
-// Definimos la URL que vamos a solicitar via Ajax
-    var ajax_url = "http://localhost:8765/api/hotels/";
+function loadHotels() {
+    get(APIendpoint+"/hotels").then(function(response) {
+        console.log("Success!", response);
+    }, function(error) {
+        console.error("Failed!", error);
+    })
+}
 
-// Añadimos los parámetros a la URL
-    ajax_url += id;
+function loadHotelInfo(id) {
+    get(APIendpoint+"/hotels/"+id).then(function(response) {
+        console.log("Success!", response);
+    }, function(error) {
+        console.error("Failed!", error);
+    })
+}
 
-// Creamos un nuevo objeto encargado de la comunicación
-    var ajax_request = new XMLHttpRequest();
 
-// Definimos como queremos realizar la comunicación
-    ajax_request.open( "GET", ajax_url, true );
+function displayHotels () {
 
-//Enviamos la solicitud
-    ajax_request.send();
+    // Create element: http://www.w3schools.com/jsref/met_document_createelement.asp
+    // Crear elementos HTML leyendo con un loop la response: http://stackoverflow.com/questions/17264182/javascript-efficiently-insert-multiple-html-elements
+    // Añadir event handlers para poder clickar los botones creados dinamicamente: https://toddmotto.com/attaching-event-handlers-to-dynamically-created-javascript-elements/
+
+    //
+
 }
