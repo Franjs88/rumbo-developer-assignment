@@ -43,22 +43,6 @@ function injectHotel(parentId, element, hotelId) {
 
 
 /*
- * This function adds an element to the DOM
- * Params:
- * id: id of the HTML element that will be used as a reference node.
- * elemType: Type of HTML element that will be injected.
- * OPTIONAL:: elemText: String with the text that the element should contain.
- */
-function addElement (id, elemType, elemText) {
-    // create a new div element, and give it some content
-    var newElem = document.createElement(elemType);
-    newElem.appendChild(document.createTextNode(elemText)); //add the text node to the newly created div.
-
-    // add the newly created element and its content into the DOM
-    insertAfter(newElem, document.getElementById(id));
-}
-
-/*
  * Given a elemType and elemText, creates a HTML element.
  * Returns the created element.
  */
@@ -127,6 +111,7 @@ function get(url, param) {
 function processHotels (response) {
     var element;
     var hotels = JSON.parse(response);
+
     for (var i = 0; i < hotels.length; i++) {
         element = createHTMLElement("button",hotels[i].name);
         injectHotel("hotels-list", element,hotels[i].id);
@@ -231,12 +216,5 @@ function displayHotel (hotelId) {
         generateHotelInfoPanel(response);
 
     });
-
-
-    // Create element: http://www.w3schools.com/jsref/met_document_createelement.asp
-    // Crear elementos HTML leyendo con un loop la response: http://stackoverflow.com/questions/17264182/javascript-efficiently-insert-multiple-html-elements
-    // Añadir event handlers para poder clickar los botones creados dinamicamente: https://toddmotto.com/attaching-event-handlers-to-dynamically-created-javascript-elements/
-
-    //
 
 }
