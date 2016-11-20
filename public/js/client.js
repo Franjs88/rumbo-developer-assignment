@@ -2,20 +2,17 @@
 
 const APIendpoint = "http://localhost:8765/api";
 
-
-// Init config
-// document.body.onload = addElement("div1", "div", "Hola mundo!");
-
 // ------------
 // Utils
 // ------------
 
-function removeAllChilds (parentId) {
+function removeAllChilds (parentId, callback) {
     // removing all childs from an element
     var element = document.getElementById(parentId);
     while (element.firstChild) {
         element.removeChild(element.firstChild);
     }
+    callback;
 }
 
 /*
@@ -38,8 +35,7 @@ function insertAfter(newNode, referenceNode) {
  */
 function injectHotel(parentId, element, hotelId) {
     element.onclick = function() {
-        displayHotel(hotelId);
-//        loadHotelInfo(hotelId);
+        removeAllChilds("hotel-info", displayHotel(hotelId));
     }; // Adding function onclick with the hotel id.
 
     document.getElementById(parentId).appendChild(element);
@@ -67,21 +63,16 @@ function addElement (id, elemType, elemText) {
  * Returns the created element.
  */
 function createHTMLElement (elemType, elemText) {
-    // create a new div element, and give it some content
+    // create a new HTML element
     var newElem = document.createElement(elemType);
     // if there is text to create, we create the text node
-    if (elemType != undefined || elemType != null) {
+    if (elemText != undefined || elemText != null) {
         newElem.appendChild(document.createTextNode(elemText)); //add the text node to the newly created div.
     }
 
 
     return newElem;
 }
-
-
-// ------------
-// End Utils
-// ------------
 
 
 // Promises by Google: https://developers.google.com/web/fundamentals/getting-started/primers/promises#promisifying_xmlhttprequest
@@ -123,6 +114,12 @@ function get(url, param) {
     });
 }
 
+//--------------------------------------------------------------
+// ------------
+// End Utils
+// ------------
+//--------------------------------------------------------------
+
 
 /*
  * Process the JSON response and creates in the DOM the list of Hotels presenting them as buttons.
@@ -130,9 +127,7 @@ function get(url, param) {
 function processHotels (response) {
     var element;
     var hotels = JSON.parse(response);
-    console.log(hotels);
     for (var i = 0; i < hotels.length; i++) {
-        console.log(hotels[i]);
         element = createHTMLElement("button",hotels[i].name);
         injectHotel("hotels-list", element,hotels[i].id);
     }
@@ -148,7 +143,7 @@ function loadHotels () {
 
 function loadHotelInfo (id, callback) {
     get(APIendpoint+"/hotels/"+id).then(function(response) {
-        callback(JSON.parse(response));
+       callback(JSON.parse(response));
 
     }, function(error) {
         console.error("Failed!", error);
@@ -156,28 +151,84 @@ function loadHotelInfo (id, callback) {
     )
 }
 
+
+/*
+ * Creates the container and the image elements and returns the div created.
+ */
+function generateHotelImage (response) {
+    var div = createHTMLElement("div");
+    div.className = "flex-30 margin-20";
+
+    // We create the image that will be inside the div just created
+
+    var imageUrl = createHTMLElement("img");
+    imageUrl.className = "hotelImg";
+    imageUrl.src = response.imgUrl;
+
+    div.appendChild(imageUrl);
+
+    document.getElementById("hotel-info").appendChild(div);
+}
+
+
+function generateNameAndRating (response) {
+    var nameAndRatingDiv = createHTMLElement("div");
+    nameAndRatingDiv.className = "flex-100 layout-column";
+
+    // We generate the individual items
+    var name = createHTMLElement("span",response.name);
+    name.id = "hotelTitle";
+
+    nameAndRatingDiv.appendChild(name);
+
+    var rating = createHTMLElement("span");
+    rating.className = "ratings-"+response.rating;
+
+    nameAndRatingDiv.appendChild(rating);
+
+    return nameAndRatingDiv
+
+}
+
+
+function generateHotelInfoPanel (response) {
+    var hotelInfoDiv = createHTMLElement("div");
+    hotelInfoDiv.className = "flex-70 margin-right-20 margin-bottom-20 margin-top-20" +
+    " layout-column layout-align-start-space-between";
+
+    // We create the div that will contain name and rating of the hotel
+    var nameAndRating = generateNameAndRating(response);
+
+    hotelInfoDiv.appendChild(nameAndRating);
+
+    // Now we generate the price div
+    var priceDiv = createHTMLElement("div");
+    priceDiv.className = "flex-100 layout-column layout-align-end";
+
+    // We generate the price and text spans
+    var price = createHTMLElement("span","£"+response.price.toFixed(2));
+    price.id = "hotel-price";
+    price.className = "lmFont";
+
+    var totalText = createHTMLElement("span","Total hotel stay");
+    totalText.className = "detailFont";
+
+    priceDiv.appendChild(price);
+    insertAfter(totalText, price);
+
+    hotelInfoDiv.appendChild(priceDiv);
+
+    document.getElementById("hotel-info").appendChild(hotelInfoDiv);
+}
+
+
 function displayHotel (hotelId) {
-    removeAllChilds("hotel-info");
 
     loadHotelInfo(hotelId, function(response) {
 
-        console.log("JSON del hotel: ", response);
-        var rating = response.rating;
-
         // Creating HTML elements that will be displayed
-        var imageUrl = createHTMLElement("img");
-        imageUrl.id = "hotel-img";
-        imageUrl.src = response.imgUrl;
-
-        var name = createHTMLElement("span",response.name);
-        name.id = "hotel-name";
-
-        var price = createHTMLElement("span",response.price);
-        price.id = "hotel-price";
-
-        document.getElementById("hotel-info").appendChild(imageUrl);
-        document.getElementById("hotel-info").appendChild(name);
-        document.getElementById("hotel-info").appendChild(price);
+        generateHotelImage(response);
+        generateHotelInfoPanel(response);
 
     });
 

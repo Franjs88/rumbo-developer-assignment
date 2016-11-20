@@ -1,0 +1,125 @@
+.header-wrap {
+    background: #ec008c;
+    border-top: 3px solid #b9006e;
+    padding: 0.8rem;
+    width: 100%;
+}
+
+.header-wrap > img {
+    display: block;
+    margin: auto;
+}
+
+body {
+    margin: 0px;
+}
+
+#hotel-info {
+    height: 218px;
+}
+
+.hotelImg {
+    height: 150px;
+    width: 180px;
+}
+
+span {
+    font-family: 'Open Sans', sans-serif;
+}
+
+#hotelTitle {
+    font-weight: 700;
+}
+
+.lmFont {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ec008c;
+}
+
+.detailFont {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #555555;
+}
+
+#hotels-list button {
+    padding: 1rem;
+    width: 100%;
+}
+
+.hotelsListCard {
+    background-color: #d9d9d9;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+.hotelCard {
+    background-color: #eeeeec;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+.margin-bottom-30 {
+    margin-bottom: 3rem;
+}
+.margin-bottom-20 {
+    margin-bottom: 2rem;
+}
+
+.margin-20 {
+    margin: 2rem;
+}
+
+.margin-left-20 {
+    margin-left: 2rem;
+}
+
+.margin-right-20 {
+    margin-right: 2rem;
+}
+
+.margin-top-20 {
+    margin-top: 2rem;
+}
+
+/*
+* Sprite ratings treatment
+*/
+
+.ratings-0, .ratings-1, .ratings-2, .ratings-3, .ratings-4, .ratings-5 {
+    background-image: url('../images/ratings.png');
+    background-repeat: no-repeat;
+}
+
+.ratings-0 {
+    height: 18px;
+    background-position: 0px 0px;
+}
+
+.ratings-1 {
+    height: 18px;
+    background-position: 0px -18px;
+}
+
+.ratings-2 {
+    height: 18px;
+    background-position: 0px -36px;
+}
+
+.ratings-3 {
+    height: 18px;
+    background-position: 0px -54px;
+}
+
+.ratings-4 {
+    height: 18px;
+    background-position: 0px -72px;
+}
+
+.ratings-5 {
+    height: 18px;
+    background-position: 0px -90px;
+}
+
+
+
+
