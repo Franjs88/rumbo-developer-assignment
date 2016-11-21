@@ -1,7 +1,69 @@
+/*
+ * Media queries for mobile-friendly
+ */
+
+/* Larger screens */
+@media (min-width: 641px) and (max-width: 1050px) {
+    .layout-section {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .flex-hotel-list {
+        width: 25%;
+    }
+
+    .flex-hotel-info {
+        width: 56%;
+    }
+
+    #hotels-list {
+        margin-right: 2rem;
+    }
+
+}
+
+@media (min-width: 1051px) {
+    .layout-section {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .flex-hotel-list {
+        width: 15%;
+    }
+
+    .flex-hotel-info {
+        width: 40%;
+    }
+
+    #hotels-list {
+        margin-right: 2rem;
+    }
+}
+
+/* Mobile screens */
+@media (max-width: 640px) {
+    .layout-section {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .flex-hotel-list {
+        width: 100%;
+    }
+
+    .flex-hotel-info {
+        width: 100%;
+    }
+}
+
+
 .header-wrap {
     background: #ec008c;
     border-top: 3px solid #b9006e;
-    padding: 0.8rem;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
     width: 100%;
 }
 
