@@ -71,9 +71,9 @@ function get(url, param) {
     return new Promise(function(resolve, reject) {
         // Do the usual XHR stuff
         var req = new XMLHttpRequest();
-        var req_url = url;
 
-        if (param !== undefined || null) {
+        var req_url = url;
+        if (param != undefined || null) {
             req_url += param;
         }
 
@@ -111,24 +111,36 @@ function get(url, param) {
 
 
 /*
- * Process the JSON response and creates in the DOM the list of Hotels presenting them as
- * buttons.
+ * Process the JSON response and creates in the DOM the list of Hotels presenting them as buttons.
  */
+function processHotels (response) {
+    var element;
+    var hotels = JSON.parse(response);
+
+    for (var i = 0; i < hotels.length; i++) {
+        element = createHTMLElement("button",hotels[i].name);
+        injectHotel("hotels-list", element,hotels[i].id);
+    }
+}
+
 function loadHotels () {
-
     get(APIendpoint+"/hotels").then(function(response) {
-        //processHotels(response);
-        var element;
-        var hotels = JSON.parse(response);
-
-        for (var i = 0; i < hotels.length; i++) {
-            element = createHTMLElement("button",hotels[i].name);
-            injectHotel("hotels-list", element,hotels[i].id);
-        }
-
+        processHotels(response);
     }, function(error) {
         console.error("Failed!", error);
     })
+}
+
+
+
+function loadHotelInfo (id, callback) {
+    get(APIendpoint+"/hotels/"+id).then(function(response) {
+            callback(JSON.parse(response));
+
+        }, function(error) {
+            console.error("Failed!", error);
+        }
+    )
 }
 
 
@@ -204,16 +216,12 @@ function generateHotelInfoPanel (response) {
 
 function displayHotel (hotelId) {
 
-    get(APIendpoint+"/hotels/"+hotelId).then(function(response) {
-            var json = JSON.parse(response);
+    loadHotelInfo(hotelId, function(response) {
 
-            // Creating HTML elements that will be displayed
-            generateHotelImage(json);
-            generateHotelInfoPanel(json);
+        // Creating HTML elements that will be displayed
+        generateHotelImage(response);
+        generateHotelInfoPanel(response);
 
-        }, function(error) {
-            throw error;
-            console.error("Failed!", error);
-        }
-    )
+    });
+
 }

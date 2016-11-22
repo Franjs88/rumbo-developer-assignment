@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Rumbo tests</title>
+    <link rel="stylesheet" media="all" href="../node_modules/mocha/mocha.css">
+</head>
+<body>
+<div id="mocha"><p><a href="">Index</a></p></div>
+<div id="messages"></div>
+<div id="fixtures"></div>
+<script src="../node_modules/mocha/mocha.js"></script>
+<script src="../node_modules/chai/chai.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/1.15.4/sinon.min.js"></script>
+
+<script src="../public/js/client.js"></script>
+<script>mocha.setup('bdd')</script>
+<script src="ClientTests.js"></script>
+<script>mocha.run();</script>
+</body>
+</html>
