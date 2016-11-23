@@ -8,11 +8,11 @@
   "author": "lastminute.com",
   "private": true,
   "devDependencies": {
-    "chai": "^3.5.0",
-    "chai-as-promised": "^6.0.0",
+    "chai": "3.5.0",
+    "chai-as-promised": "6.0.0",
     "dyson": "git+https://github.com/webpro/dyson.git",
     "mocha": "3.*",
-    "sinon": "^1.17.6"
+    "sinon": "1.17.6"
   },
   "dependencies": {
     "requirejs": "^2.3.2"
