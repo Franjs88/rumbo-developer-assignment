@@ -1,3 +1,12 @@
+## Special Notes from the candidate
+Error found: The dyson server only search for the /public folder in order to serve static files, but in order to serve the images, I had to create a copy of the /images folder into the /public directory.
+
+The automated and self-checking tests are located in the 'tests' folder, and can be executed by opening the TestsSummary.html.
+
+In order to run the app just run dyson fake server as usual, and go to: http://localhost:8765 on your prefered browser.
+
+Appart from the 640 breakpoint, I've decided to add another breakpoint so the webpage is well displayed also on tablets.
+
 # UI developer assignment
 
 The lastminute.com mobile website includes a number of pages allowing users to book flights and hotels. **We want to reimplement the hotel list page** using mobile-friendly, modular and testable principles.
